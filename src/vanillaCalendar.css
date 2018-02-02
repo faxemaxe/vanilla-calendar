@@ -97,6 +97,10 @@
   cursor: pointer;
 }
 
+#v-cal .vcal-date--highlight span {
+  font-weight: bold;
+}
+
 #v-cal .vcal-date--today {
   background-color: var(--vcal-today-bg-color);
   color: var(--vcal-today-color);

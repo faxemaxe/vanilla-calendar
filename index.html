@@ -102,13 +102,13 @@
 				</button>
 			</div>
 			<div class="vcal-week">
-				<span>Mon</span>
-				<span>Tue</span>
-				<span>Wed</span>
-				<span>Thu</span>
-				<span>Fri</span>
-				<span>Sat</span>
-				<span>Sun</span>
+				<span>Mo</span>
+				<span>Di</span>
+				<span>Mi</span>
+				<span>Do</span>
+				<span>Fr</span>
+				<span>Sa</span>
+				<span>So</span>
 			</div>
 			<div class="vcal-body" data-calendar-area="month"></div>
 		</div>
@@ -127,7 +127,13 @@
 	<script>
 		window.addEventListener('load', function () {
 			vanillaCalendar.init({
-				disablePastDays: true
+				disablePastDays: false,
+				highlightedDates: [
+					'2018-02-03',
+				],
+				dateChanged: function (e) {
+					console.log('changed: ', e);
+				}
 			});
 		})
 	</script>

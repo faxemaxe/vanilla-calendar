@@ -34,7 +34,7 @@ var vanillaCalendar = {
   createDay: function (num, day, year) {
     var newDay = document.createElement('div')
     var dateEl = document.createElement('span')
-    dateEl.innerHTML = num
+    dateEl.innerHTML = this.padNumber(num);
     newDay.className = 'vcal-date'
     newDay.setAttribute('data-calendar-date', this.date)
 
@@ -54,12 +54,32 @@ var vanillaCalendar = {
       newDay.setAttribute('data-calendar-status', 'active')
     }
 
+    if (this.isHighlightedDate(year + '-' + (this.padNumber(this.date.getMonth() + 1)) + '-' + this.padNumber(num))) {
+      newDay.classList.add('vcal-date--highlight');
+    }
+
     if (this.date.toString() === this.todaysDate.toString()) {
       newDay.classList.add('vcal-date--today')
     }
 
     newDay.appendChild(dateEl)
     this.month.appendChild(newDay)
+  },
+
+  isHighlightedDate: function (dateStr) {
+    var found = false;
+    var i = 0;
+
+    if (this.options.highlightedDates && this.options.highlightedDates.length) {
+      while (!found && i < this.options.highlightedDates.length) {
+        if (this.options.highlightedDates[i] === dateStr) {
+          found = true;
+        }
+        i++;
+      }
+    }
+
+    return found;
   },
 
   dateClicked: function () {
@@ -72,6 +92,9 @@ var vanillaCalendar = {
         var picked = document.querySelectorAll(
           '[data-calendar-label="picked"]'
         )[0]
+        if (_this.options.dateChanged) {
+          _this.options.dateChanged(this.dataset.calendarDate);
+        }
         picked.innerHTML = this.dataset.calendarDate
         _this.removeActiveClass()
         this.classList.add('vcal-date--selected')
@@ -100,18 +123,18 @@ var vanillaCalendar = {
 
   monthsAsString: function (monthIndex) {
     return [
-      'January',
-      'Febuary',
-      'March',
+      'Januar',
+      'Februar',
+      'März',
       'April',
-      'May',
-      'June',
-      'July',
+      'Mai',
+      'Juni',
+      'Juli',
       'August',
       'September',
-      'October',
+      'Oktober',
       'November',
-      'December'
+      'Dezember'
     ][monthIndex]
   },
 
@@ -123,5 +146,10 @@ var vanillaCalendar = {
     for (var i = 0; i < this.activeDates.length; i++) {
       this.activeDates[i].classList.remove('vcal-date--selected')
     }
-  }
+  },
+
+  padNumber: function (numberToPad) {
+    return numberToPad < 10 ? '0' + numberToPad : numberToPad;
+  },
+
 }
